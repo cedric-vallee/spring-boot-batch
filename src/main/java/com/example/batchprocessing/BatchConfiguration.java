@@ -5,6 +5,7 @@ import javax.sql.DataSource;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobExecutionListener;
 import org.springframework.batch.core.Step;
+import org.springframework.batch.core.configuration.annotation.DefaultBatchConfigurer;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
@@ -26,13 +27,21 @@ import org.springframework.jdbc.core.JdbcTemplate;
 // tag::setup[]
 @Configuration
 @EnableBatchProcessing
-public class BatchConfiguration {
+public class BatchConfiguration extends DefaultBatchConfigurer {
 
 	@Autowired
 	public JobBuilderFactory jobBuilderFactory;
 
 	@Autowired
 	public StepBuilderFactory stepBuilderFactory;
+
+	@Override
+    @Autowired
+    public void setDataSource(DataSource dataSource) {
+        // If we don't provide a datasource, an in-memory map will be used.
+        // https://stackoverflow.com/questions/49550523/java-spring-batch-using-embedded-database-for-metadata-and-a-second-database-for
+    }
+
 	// end::setup[]
 
 	// tag::readerwriterprocessor[]
