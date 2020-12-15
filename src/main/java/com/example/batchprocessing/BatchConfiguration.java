@@ -3,7 +3,6 @@ package com.example.batchprocessing;
 import javax.sql.DataSource;
 
 import org.springframework.batch.core.Job;
-import org.springframework.batch.core.JobExecutionListener;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.DefaultBatchConfigurer;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
@@ -16,13 +15,10 @@ import org.springframework.batch.item.database.builder.JdbcBatchItemWriterBuilde
 import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
 import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
-import org.springframework.batch.item.file.mapping.DefaultLineMapper;
-import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.jdbc.core.JdbcTemplate;
 
 // tag::setup[]
 @Configuration
@@ -51,7 +47,7 @@ public class BatchConfiguration extends DefaultBatchConfigurer {
 			.name("personItemReader")
 			.resource(new ClassPathResource("sample-data.csv"))
 			.delimited()
-			.names(new String[]{"firstName", "lastName"})
+			.names("firstName", "lastName")
 			.fieldSetMapper(new BeanWrapperFieldSetMapper<Person>() {{
 				setTargetType(Person.class);
 			}})

@@ -1,0 +1,19 @@
+spring:
+    datasource:
+        driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
+        url: jdbc:sqlserver://<ip>:<port>;databaseName=<name>
+        password: 
+        username:
+
+    output:
+        ansi:
+            enabled: DETECT
+
+logging:
+    file: logs/app.log
+    level:
+        root: INFO
+        com.example.batchprocessing: INFO
+    pattern:
+        console: "%d %-5level %logger : %msg%n"
+        file: "%d %-5level [%thread] %logger : %msg%n"
